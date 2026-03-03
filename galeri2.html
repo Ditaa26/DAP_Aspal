@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Proyek – Dita Aryani Putri</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a1a2e;
+  --accent: #b8860b;
+  --accent-light: #d4a017;
+  --white: #ffffff;
+  --off-white: #fafaf8;
+  --border: #e8e4dc;
+  --text: #1a1a1a;
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 17px; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--off-white); color: var(--text); }
+
+nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 5%; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+.nav-logo span { color: var(--accent); }
+.back-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent); color: var(--white); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.55rem 1.2rem; border-radius: 6px; transition: all 0.2s; }
+.back-btn:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+.page-hero { background: var(--primary); padding: 4rem 5%; text-align: center; }
+.page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--white); font-weight: 700; margin-bottom: 0.8rem; }
+.page-hero p { font-size: 1rem; color: rgba(255,255,255,0.6); max-width: 500px; margin: 0 auto 1.5rem; }
+.foto-count { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(184,134,11,0.2); border: 1px solid rgba(184,134,11,0.4); border-radius: 100px; padding: 0.4rem 1.2rem; font-size: 0.82rem; color: var(--accent-light); font-weight: 600; letter-spacing: 0.08em; }
+
+.gallery-wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 5% 5rem; }
+.masonry { columns: 3; gap: 12px; }
+.masonry-item { break-inside: avoid; margin-bottom: 12px; border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; background: #1e1e2e; transition: transform 0.3s, box-shadow 0.3s; }
+.masonry-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.masonry-item img { width: 100%; display: block; object-fit: cover; }
+.masonry-item .ph { background: linear-gradient(160deg, #2c2c2c, #1a1a1a); display: none; }
+/* Hover border efek */
+.masonry-item::after { content: ''; position: absolute; inset: 0; border: 2px solid transparent; border-radius: 10px; transition: border-color 0.3s; pointer-events: none; }
+.masonry-item:hover::after { border-color: var(--accent); }
+
+#lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.94); align-items: center; justify-content: center; padding: 2rem; }
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+#lightbox-close { position: absolute; top: 1.5rem; right: 2rem; color: white; font-size: 2.5rem; cursor: pointer; background: none; border: none; line-height: 1; opacity: 0.7; transition: opacity 0.2s; }
+#lightbox-close:hover { opacity: 1; }
+
+.cta-section { background: var(--primary); padding: 4rem 5%; text-align: center; }
+.cta-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--white); margin-bottom: 1rem; }
+.cta-section p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+.btn-gold { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--accent); color: var(--white); padding: 0.9rem 2rem; border-radius: 6px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s; }
+.btn-gold:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+@media (max-width: 768px) { .masonry { columns: 2; } }
+@media (max-width: 480px) { .masonry { columns: 1; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Dita <span>Aryani</span> Putri</a>
+  <a href="index.html" class="back-btn">← Kembali ke Beranda</a>
+</nav>
+
+<div class="page-hero">
+  <h1>Galeri <em style="color:var(--accent-light)">Proyek</em></h1>
+  <p>Dokumentasi hasil pekerjaan kami dari berbagai proyek pengaspalan</p>
+  <div class="foto-count" id="hero-count">📷 Memuat foto...</div>
+</div>
+
+<div class="gallery-wrap">
+  <div class="masonry" id="masonry"></div>
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Foto Proyek">
+</div>
+<script>
+// ================================================================
+// DAFTAR FOTO — ganti nama file sesuai foto kamu
+// Taruh semua file foto satu folder dengan galeri.html
+// Tambah baris baru untuk tambah foto
+// ================================================================
+const FOTO_GALERI = [
+  "1.jpeg",
+  "2.jpeg",
+  "3.jpeg",
+  "4.jpeg",
+  "5.jpeg",
+  "6.jpeg",
+  "7.jpeg",
+  "8.jpeg",
+  "9.jpeg",
+  "10.jpeg",
+  "12.jpeg",
+];
+
+const phHeights = [220, 180, 260, 200, 240, 180, 260, 200, 220, 180, 260, 200];
+const masonry = document.getElementById('masonry');
+document.getElementById('hero-count').textContent = `📷 ${FOTO_GALERI.length} Foto Proyek`;
+
+FOTO_GALERI.forEach((src, i) => {
+  const ph = phHeights[i % phHeights.length];
+  const item = document.createElement('div');
+  item.className = 'masonry-item';
+  item.innerHTML = `
+    <img src="${src}" alt="Foto Proyek" style="min-height:${ph}px"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="ph" style="height:${ph}px"></div>
+  `;
+  item.onclick = () => openLightbox(src);
+  masonry.appendChild(item);
+});
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-img').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
