@@ -139,20 +139,6 @@ section { padding: 5rem 5%; }
 .step-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
 .step-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.6; }
 
-#testimoni { background: var(--light-bg); }
-.testi-header { text-align: center; margin-bottom: 3rem; }
-.testi-header .section-label { justify-content: center; }
-.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.testi-card { background: var(--white); border-radius: 12px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow); transition: all 0.3s; }
-.testi-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.testi-quote { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--accent); line-height: 0.8; margin-bottom: 1rem; opacity: 0.35; }
-.testi-stars { color: var(--accent); font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; }
-.testi-text { font-size: 0.97rem; color: var(--text-mid); line-height: 1.75; font-style: italic; margin-bottom: 1.5rem; }
-.testi-author { display: flex; align-items: center; gap: 0.9rem; }
-.testi-av { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-light)); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); font-weight: 700; flex-shrink: 0; }
-.testi-name { font-size: 0.95rem; font-weight: 700; color: var(--primary); }
-.testi-role { font-size: 0.82rem; color: var(--text-light); }
-
 #kontak { background: var(--primary); }
 .kontak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
 .kontak-tagline { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin: 1rem 0 2rem; font-style: italic; }
@@ -199,7 +185,6 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   .services-grid { grid-template-columns: 1fr 1fr; }
   .gallery-preview-grid { grid-template-columns: repeat(4, 1fr); grid-template-rows: 100px; }
   .steps-grid { grid-template-columns: 1fr 1fr; }
-  .testi-grid { grid-template-columns: 1fr; }
   .kontak-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   footer { flex-direction: column; text-align: center; align-items: center; }
 }
@@ -220,7 +205,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
 <body>
 
 <nav id="navbar">
-  <a href="#hero" class="nav-logo"><img src="images/logo2.png" alt="Logo DA">Dita <span>Aryani</span> Putri</a>
+  <a href="#hero" class="nav-logo"><img src="images/logo-removebg-preview.png" alt="Logo DA">Dita <span>Aryani</span> Putri</a>
   <ul class="nav-links">
     <li><a href="#tentang">Tentang</a></li>
     <li><a href="#layanan">Layanan</a></li>
@@ -258,7 +243,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
       </div>
     </div>
     <div class="hero-image">
-      <img src="2.jpeg" alt="Proyek Pengaspalan" onerror="this.style.display='none'">
+      <img src="images/2.jpeg" alt="Proyek Pengaspalan" onerror="this.style.display='none'">
     </div>
   </div>
 </section>
@@ -267,7 +252,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   <div class="section-wrap">
     <div class="about-grid">
       <div class="about-img-wrap reveal">
-        <img src="1.jpeg" alt="Tim Dita Aryani Putri" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=about-img-placeholder><p>Taruh foto di folder yang sama</p></div>'">
+        <img src="images/1.jpeg" alt="Tim Dita Aryani Putri" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=about-img-placeholder><p>Taruh foto di folder yang sama</p></div>'">
       </div>
       <div class="reveal">
         <div class="section-label"><span>Tentang Kami</span></div>
@@ -298,8 +283,9 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
       <div class="svc-card"><span class="svc-emoji">🅿️</span><div class="svc-num">03</div><div class="svc-name">Pengaspalan Area Parkir</div><p class="svc-desc">Lahan parkir komersial, perkantoran, dan fasilitas umum dengan permukaan rata dan marking yang jelas.</p></div>
       <div class="svc-card"><span class="svc-emoji">🏭</span><div class="svc-num">04</div><div class="svc-name">Jalan Kawasan Industri</div><p class="svc-desc">Dirancang untuk menahan beban berat kendaraan besar dan lalu lintas intensif di area industri dan pabrik.</p></div>
       <div class="svc-card"><span class="svc-emoji">🏘️</span><div class="svc-num">05</div><div class="svc-name">Jalan Perumahan &amp; Komplek</div><p class="svc-desc">Jalan lingkungan, gang, dan akses komplek perumahan dengan standar kualitas yang memenuhi kebutuhan penghuni.</p></div>
-      <div class="svc-card"><span class="svc-emoji">📐</span><div class="svc-num">06</div><div class="svc-name">Survey &amp; Konsultasi RAB</div><p class="svc-desc">Survey lapangan, perencanaan teknis, dan penyusunan RAB yang akurat, transparan, dan detail.</p></div>
-      <div class="svc-card"><span class="svc-emoji">🚜</span><div class="svc-num">07</div><div class="svc-name">Pengurugan &amp; Cut and Fill</div><p class="svc-desc">Pekerjaan pengurugan lahan dan cut and fill untuk persiapan area sebelum pengaspalan maupun konstruksi, menggunakan alat berat berpengalaman.</p></div>
+      <div class="svc-card"><span class="svc-emoji">🧱</span><div class="svc-num">06</div><div class="svc-name">Pemasangan Paving Blok</div><p class="svc-desc">Pemasangan paving blok untuk jalan, trotoar, taman, dan halaman dengan berbagai pilihan motif dan warna yang estetis dan tahan lama.</p></div>
+      <div class="svc-card"><span class="svc-emoji">📐</span><div class="svc-num">07</div><div class="svc-name">Survey &amp; Konsultasi RAB</div><p class="svc-desc">Survey lapangan, perencanaan teknis, dan penyusunan RAB yang akurat, transparan, dan detail.</p></div>
+      <div class="svc-card"><span class="svc-emoji">🚜</span><div class="svc-num">08</div><div class="svc-name">Pengurugan &amp; Cut and Fill</div><p class="svc-desc">Pekerjaan pengurugan lahan dan cut and fill untuk persiapan area sebelum pengaspalan maupun konstruksi, menggunakan alat berat berpengalaman.</p></div>
     </div>
   </div>
 </section>
@@ -312,7 +298,6 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
         <h2 class="section-title">Hasil Karya Kami</h2>
       </div>
     </div>
-    <!-- 4 foto preview, klik buka galeri.html -->
     <div class="gallery-preview-grid reveal" id="preview-grid"></div>
     <div class="gallery-more reveal">
       <p class="gallery-count-info">Lihat <strong>semua foto proyek</strong> kami →</p>
@@ -339,20 +324,6 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
-<section id="testimoni">
-  <div class="section-wrap">
-    <div class="testi-header reveal">
-      <div class="section-label"><span>Testimoni</span></div>
-      <h2 class="section-title">Kata Klien Kami</h2>
-    </div>
-    <div class="testi-grid reveal">
-      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-stars">★★★★★</div><p class="testi-text">Sangat puas dengan hasil pengaspalan kompleks perumahan kami. Pengerjaan rapi, tepat waktu, dan hasilnya sudah bertahan lebih dari 2 tahun tanpa kerusakan.</p><div class="testi-author"><div class="testi-av">B</div><div><div class="testi-name">Budi Santoso</div><div class="testi-role">Developer Perumahan, Tangerang</div></div></div></div>
-      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-stars">★★★★★</div><p class="testi-text">Tim profesional dan responsif. Dari survey hingga selesai sangat cepat. Harga transparan dan tidak ada biaya tambahan yang tidak terduga.</p><div class="testi-author"><div class="testi-av">R</div><div><div class="testi-name">Ratna Dewi</div><div class="testi-role">Kepala Desa, Bekasi</div></div></div></div>
-      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-stars">★★★★★</div><p class="testi-text">Kami percayakan pengaspalan area pabrik kepada Dita Aryani Putri. Hasilnya memuaskan, kuat untuk kendaraan berat setiap hari. Rekomendasikan!</p><div class="testi-author"><div class="testi-av">H</div><div><div class="testi-name">Hendra Wijaya</div><div class="testi-role">Manager Operasional PT. Maju Bersama</div></div></div></div>
-    </div>
-  </div>
-</section>
-
 <section id="kontak">
   <div class="section-wrap">
     <div class="section-label"><span>Hubungi Kami</span></div>
@@ -362,9 +333,9 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
         <p class="kontak-tagline">Konsultasikan kebutuhan pengaspalan Anda. Kami siap hadir kapanpun Anda butuhkan.</p>
         <div class="kontak-items">
           <div class="kontak-item"><div class="k-icon">📍</div><div><div class="k-label">Lokasi Operasional</div><div class="k-value">Jabodetabek &amp; Sekitarnya</div></div></div>
-          <div class="kontak-item"><div class="k-icon">📱</div><div><div class="k-label">WhatsApp / Telepon</div><div class="k-value">0812-8142-9709 (Nana Kurniawan)</div><div class="k-value">0813-8222-7125 (Jajang Atmaja)</div></div></div>
+          <div class="kontak-item"><div class="k-icon">📱</div><div><div class="k-label">WhatsApp / Telepon</div><div class="k-value">0812-8142-9709 (Nana Kurniawan) </div><div class="k-value">0813-8222-7125 (Jajang Atmaja) </div></div></div>
           <div class="kontak-item"><div class="k-icon">⏰</div><div><div class="k-label">Jam Operasional</div><div class="k-value">Senin – Sabtu, 07.00 – 17.00 WIB</div></div></div>
-          <div class="kontak-item"><div class="k-icon">📧</div><div><div class="k-label">Email</div><div class="k-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfb6b1b9b09fbbb6abbebeada6beb1b6afaaabadb6f1bcb0b2">[email&#160;protected]</a></div></div></div>
+          <div class="kontak-item"><div class="k-icon">📧</div><div><div class="k-label">Email</div><div class="k-value">ditaaryaniputri@email.com</div></div></div>
         </div>
       </div>
       <div class="kontak-cta reveal">
@@ -389,36 +360,23 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   <div class="f-logo">Dita <span>Aryani</span> Putri</div>
   <p class="f-copy">© 2025 CV. Dita Aryani Putri. Seluruh hak cipta dilindungi.</p>
 </footer>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ================================================================
-// DAFTAR FOTO — ganti nama file sesuai foto kamu
-// Urutan pertama = foto paling atas/kiri di preview halaman utama
-// ================================================================
+
+<script>
 const FOTO_GALERI = [
-  "1.jpeg",
-  "2.jpeg",
-  "3.jpeg",
-  "4.jpeg",
-  "5.jpeg",
-  "6.jpeg",
-  "7.jpeg",
-  "8.jpeg",
-  "9.jpeg",
-  "10.jpeg",
-  "11.jpeg",
-  "12.jpeg",
-  "13.jpeg",
-  "14.jpeg",
-  "15.jpeg",
-  "16.jpeg",
-  "17.jpeg",
-  "18.jpeg",
-
-
-
+  "images/1.jpeg",
+  "images/2.jpeg",
+  "images/3.jpeg",
+  "images/4.jpeg",
+  "images/5.jpeg",
+  "images/6.jpeg",
+  "images/7.jpeg",
+  "images/8.jpeg",
+  "images/9.jpeg",
+  "images/10.jpeg",
+  "images/11.jpeg",
+  "images/12.jpeg",
 ];
 
-// Render 4 foto preview (tanpa label)
 const grid = document.getElementById('preview-grid');
 FOTO_GALERI.slice(0, 4).forEach(src => {
   const item = document.createElement('div');
@@ -432,11 +390,9 @@ FOTO_GALERI.slice(0, 4).forEach(src => {
   grid.appendChild(item);
 });
 
-// Navbar scroll
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
 
-// Mobile menu
 let menuOpen = false;
 function toggleMenu() {
   menuOpen = !menuOpen;
@@ -445,13 +401,11 @@ function toggleMenu() {
   document.body.style.overflow = menuOpen ? 'hidden' : '';
 }
 
-// Reveal
 const ro = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-// Animate numbers
 function animateNum(el) {
   const target = parseInt(el.dataset.target), suffix = el.dataset.suffix || '';
   let c = 0; const step = target / 50;
