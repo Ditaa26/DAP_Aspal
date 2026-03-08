@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dita Aryani Putri – Jasa Pengaspalan Profesional</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+/* ============================================================
+   1. CSS VARIABLES & RESET
+   ============================================================ */
 :root {
   --primary: #1a1a2e;
   --accent: #b8860b;
@@ -20,165 +24,830 @@
   --text-light: #7a7a7a;
   --shadow: 0 4px 24px rgba(0,0,0,0.08);
   --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+
+  /* Navbar */
+  --nav-height: 72px;
+  --logo-size: 110px;       /* ukuran logo besar */
+  --logo-overflow: 30px;    /* seberapa jauh logo menonjol ke bawah navbar */
 }
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 17px; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--off-white); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--light-bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 5%; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: all 0.3s; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-nav.scrolled { padding: 0.9rem 5%; }
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 0.6rem; }
-.nav-logo img { height: 42px; width: 42px; object-fit: contain; border-radius: 50%; }
-.nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-.nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+/* ============================================================
+   1b. HERO ENTRANCE ANIMATIONS
+   ============================================================ */
+
+/* Navbar slide turun dari atas */
+#navbar {
+  animation: navSlideDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+@keyframes navSlideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Badge muncul bounce */
+.hero-badge {
+  animation: badgeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+@keyframes badgeIn {
+  from { opacity: 0; transform: scale(0.7) translateY(-12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Tiap baris judul slide naik dari bawah */
+.hero-title .line {
+  display: block;
+  overflow: hidden;
+}
+.hero-title .line-inner {
+  display: block;
+  animation: lineSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-title .line:nth-child(1) .line-inner { animation-delay: 0.6s; }
+.hero-title .line:nth-child(2) .line-inner { animation-delay: 0.8s; }
+@keyframes lineSlideUp {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Deskripsi fade naik */
+.hero-desc {
+  animation: fadeSlideUp 0.8s ease 1.05s both;
+}
+
+/* Tombol */
+.btn-ghost {
+  animation: fadeSlideUp 0.7s ease 1.2s both;
+}
+
+/* Stats muncul stagger */
+.hero-stats > div:nth-child(1) { animation: fadeSlideUp 0.6s ease 1.35s both; }
+.hero-stats > div:nth-child(2) { animation: fadeSlideUp 0.6s ease 1.5s both; }
+.hero-stats > div:nth-child(3) { animation: fadeSlideUp 0.6s ease 1.65s both; }
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Foto hero slide dari kanan */
+.hero-image {
+  animation: heroImgIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+@keyframes heroImgIn {
+  from { opacity: 0; transform: translateX(70px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* Garis emas shimmer di bawah hero */
+#hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: shimmerLine 1s ease 1.8s both;
+  transform-origin: left;
+}
+@keyframes shimmerLine {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+
+
+
+
+/* ============================================================
+   2. NAVBAR & LOGO (Logo besar overflow ke bawah)
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow: visible; /* penting agar logo bisa overflow */
+}
+
+/* Logo wrapper: posisi relatif agar img bisa overflow secara absolut */
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  position: relative;
+  /* Tinggi wrapper tetap sama dengan nav, tapi logo img akan overflow */
+  z-index: 10;
+}
+
+/* Logo teks */
+.nav-logo .logo-text { color: var(--primary); }
+.nav-logo .logo-text span { color: var(--accent); }
+
+/* Logo gambar — inilah yang dibuat besar & overflow ke bawah */
+.nav-logo .logo-img-wrap {
+  position: relative;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  flex-shrink: 0;
+  /* Geser logo ke bawah supaya overflow keluar navbar */
+  margin-top: calc(var(--logo-overflow) * 0.6);
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18));
+  transition: transform 0.3s;
+}
+.nav-logo .logo-img-wrap:hover { transform: scale(1.05); }
+.nav-logo .logo-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
 .nav-links a:hover { color: var(--accent); }
-.nav-cta { background: var(--accent) !important; color: var(--white) !important; padding: 0.55rem 1.4rem; border-radius: 4px; font-weight: 600 !important; }
+
+.nav-cta {
+  background: var(--accent) !important;
+  color: var(--white) !important;
+  padding: 0.55rem 1.4rem;
+  border-radius: 4px;
+  font-weight: 600 !important;
+  transition: background 0.2s !important;
+}
 .nav-cta:hover { background: var(--accent-light) !important; }
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-.hamburger span { width: 26px; height: 2px; background: var(--primary); border-radius: 2px; transition: all 0.3s; display: block; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  width: 26px; height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: all 0.3s;
+  display: block;
+}
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-#mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: var(--white); flex-direction: column; align-items: center; justify-content: center; }
+/* Mobile menu */
+#mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--white);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 #mobile-menu.open { display: flex; }
 #mobile-menu ul { list-style: none; text-align: center; width: 100%; }
 #mobile-menu ul li { border-bottom: 1px solid var(--border); }
-#mobile-menu ul li a { display: block; padding: 1.2rem 2rem; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); text-decoration: none; }
+#mobile-menu ul li a {
+  display: block;
+  padding: 1.2rem 2rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--primary);
+  text-decoration: none;
+}
 #mobile-menu ul li:last-child a { color: var(--accent); font-weight: 700; }
 
-#hero { min-height: 100vh; display: flex; align-items: center; background: var(--primary); position: relative; overflow: hidden; padding-top: 80px; }
-.hero-bg { position: absolute; inset: 0; background-image: radial-gradient(circle at 15% 60%, rgba(184,134,11,0.14) 0%, transparent 50%), radial-gradient(circle at 85% 20%, rgba(184,134,11,0.07) 0%, transparent 45%); }
-.hero-inner { width: 100%; max-width: 1200px; margin: 0 auto; padding: 4rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
-.hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(184,134,11,0.15); border: 1px solid rgba(184,134,11,0.35); border-radius: 100px; padding: 0.4rem 1.1rem; margin-bottom: 1.8rem; }
-.badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-light); animation: blink 2s ease infinite; }
+
+/* ============================================================
+   3. HERO SECTION
+   ============================================================ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--primary);
+  position: relative;
+  overflow: hidden;
+  /* padding-top menyesuaikan tinggi navbar */
+  padding-top: var(--nav-height);
+}
+
+section {
+  scroll-margin-top: var(--nav-height);
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 60%, rgba(184,134,11,0.14) 0%, transparent 50%),
+    radial-gradient(circle at 85% 20%, rgba(184,134,11,0.07) 0%, transparent 45%);
+}
+
+.hero-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(184,134,11,0.15);
+  border: 1px solid rgba(184,134,11,0.35);
+  border-radius: 100px;
+  padding: 0.4rem 1.1rem;
+  margin-bottom: 1.8rem;
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  animation: blink 2s ease infinite;
+}
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.hero-badge span { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); }
-.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4.5vw, 3.8rem); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 1.4rem; }
+.hero-badge span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 1.4rem;
+}
 .hero-title em { font-style: italic; color: var(--accent-light); }
-.hero-desc { font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 2.5rem; }
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
 .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn-gold { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--accent); color: var(--white); padding: 0.9rem 1.8rem; border-radius: 6px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
-.btn-gold:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,134,11,0.35); }
-.btn-ghost { display: inline-flex; align-items: center; gap: 0.6rem; border: 2px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.9rem 1.8rem; border-radius: 6px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: all 0.3s; }
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--accent);
+  color: var(--white);
+  padding: 0.9rem 1.8rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+.btn-gold:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(184,134,11,0.35);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 2px solid rgba(255,255,255,0.3);
+  color: var(--white);
+  padding: 0.9rem 1.8rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
 .btn-ghost:hover { border-color: var(--accent-light); color: var(--accent-light); }
-.hero-stats { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; }
-.stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--accent-light); line-height: 1; }
-.stat-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
-.hero-image { border-radius: 12px; overflow: hidden; aspect-ratio: 4/5; max-height: 560px; box-shadow: 0 32px 80px rgba(0,0,0,0.4); background: #22223a; }
+
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero-image {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  max-height: 560px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  background: #22223a;
+}
 .hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+
+/* ============================================================
+   4. SECTION SHARED STYLES
+   ============================================================ */
 section { padding: 5rem 5%; }
 .section-wrap { max-width: 1200px; margin: 0 auto; }
-.section-label { display: inline-flex; align-items: center; gap: 0.7rem; margin-bottom: 0.8rem; }
-.section-label::before { content: ''; width: 28px; height: 2px; background: var(--accent); display: block; }
-.section-label span { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
-.section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.2; color: var(--primary); }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+}
+.section-label::before {
+  content: '';
+  width: 28px; height: 2px;
+  background: var(--accent);
+  display: block;
+}
+.section-label span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--primary);
+}
 .section-title.on-dark { color: var(--white); }
 
+
+/* ============================================================
+   5. TENTANG SECTION
+   ============================================================ */
 #tentang { background: var(--white); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3rem; }
-.about-img-wrap { border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: var(--shadow-lg); background: var(--light-bg); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.about-img-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: var(--shadow-lg);
+  background: var(--light-bg);
+}
 .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.about-img-placeholder { width: 100%; height: 100%; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; }
+
+.about-img-placeholder {
+  width: 100%; height: 100%;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
 .about-img-placeholder p { font-size: 0.85rem; color: var(--text-light); }
-.about-body { font-size: 1.05rem; color: var(--text-mid); line-height: 1.85; margin: 1.2rem 0 2rem; }
-.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-.val-card { padding: 1.1rem 1.3rem; background: var(--off-white); border-radius: 8px; border-left: 3px solid var(--accent); transition: box-shadow 0.2s; }
+
+.about-body {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+  margin: 1.2rem 0 2rem;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+.val-card {
+  padding: 1.1rem 1.3rem;
+  background: var(--off-white);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+  transition: box-shadow 0.2s;
+}
 .val-card:hover { box-shadow: var(--shadow); }
-.val-title { font-size: 0.88rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+.val-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 .val-desc { font-size: 0.9rem; color: var(--text-mid); margin-top: 0.2rem; line-height: 1.5; }
 
+
+/* ============================================================
+   6. LAYANAN SECTION
+   ============================================================ */
 #layanan { background: var(--primary); }
+
 .layanan-header { text-align: center; margin-bottom: 3rem; }
 .layanan-header .section-label { justify-content: center; }
 .layanan-header p { font-size: 1rem; color: rgba(255,255,255,0.55); margin-top: 0.8rem; }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; }
-.svc-card { background: #22223a; padding: 2.5rem 2rem; transition: background 0.3s; position: relative; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.svc-card {
+  background: #22223a;
+  padding: 2.5rem 2rem;
+  transition: background 0.3s;
+  position: relative;
+}
 .svc-card:hover { background: #2a2a48; }
-.svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transition: transform 0.4s; transform-origin: left; }
+.svc-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+  transform-origin: left;
+}
 .svc-card:hover::after { transform: scaleX(1); }
+
 .svc-emoji { font-size: 2rem; display: block; margin-bottom: 1.2rem; }
-.svc-num { font-size: 0.75rem; font-weight: 700; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-.svc-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; color: var(--white); margin-bottom: 0.8rem; line-height: 1.3; }
+.svc-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.svc-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
 .svc-desc { font-size: 0.95rem; color: rgba(255,255,255,0.58); line-height: 1.7; }
 
-/* GALERI */
+
+/* ============================================================
+   7. GALERI SECTION
+   ============================================================ */
 #galeri { background: var(--light-bg); }
-.gallery-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem; }
 
-/* Grid 4 kolom kecil */
-.gallery-preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 120px; gap: 8px; }
-.gallery-preview-grid .g-item:first-child { grid-row: span 1; }
+.gallery-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
 
-.g-item { border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; background: #22223a; }
+.gallery-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 120px;
+  gap: 8px;
+}
+
+.g-item {
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: #22223a;
+}
 .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
 .g-item:hover img { transform: scale(1.06); }
-.g-ph { width: 100%; height: 100%; min-height: 180px; background: linear-gradient(160deg, #2c2c2c, #1a1a1a); }
-.g-border { position: absolute; inset: 0; border: 2px solid transparent; border-radius: 10px; transition: border-color 0.3s; pointer-events: none; }
+.g-ph {
+  width: 100%; height: 100%;
+  min-height: 180px;
+  background: linear-gradient(160deg, #2c2c2c, #1a1a1a);
+}
+.g-border {
+  position: absolute; inset: 0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: border-color 0.3s;
+  pointer-events: none;
+}
 .g-item:hover .g-border { border-color: var(--accent); }
 
-.gallery-more { margin-top: 1.6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.gallery-more {
+  margin-top: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 .gallery-count-info { font-size: 0.9rem; color: var(--text-light); }
 .gallery-count-info strong { color: var(--accent); }
-.btn-outline-dark { display: inline-flex; align-items: center; gap: 0.6rem; border: 2px solid var(--primary); color: var(--primary); padding: 0.9rem 2rem; border-radius: 6px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s; }
+
+.btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.9rem 2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+}
 .btn-outline-dark:hover { background: var(--primary); color: var(--white); transform: translateY(-2px); }
 
+
+/* ============================================================
+   8. PROSES SECTION
+   ============================================================ */
 #proses { background: var(--white); }
+
 .proses-header { text-align: center; margin-bottom: 3rem; }
 .proses-header .section-label { justify-content: center; }
 .proses-header p { font-size: 1rem; color: var(--text-mid); margin-top: 0.8rem; }
-.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.step-card { text-align: center; padding: 2rem 1.5rem; background: var(--off-white); border-radius: 12px; border: 1px solid var(--border); transition: all 0.3s; }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.step-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: var(--off-white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
 .step-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-3px); }
-.step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-pale); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+
+.step-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--accent-pale);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
 .step-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
 .step-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.6; }
 
+
+/* ============================================================
+   9. KONTAK SECTION
+   ============================================================ */
 #kontak { background: var(--primary); }
-.kontak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
-.kontak-tagline { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin: 1rem 0 2rem; font-style: italic; }
+
+.kontak-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 3rem;
+  align-items: start;
+}
+
+.kontak-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  margin: 1rem 0 2rem;
+  font-style: italic;
+}
+
 .kontak-items { display: flex; flex-direction: column; gap: 1rem; }
-.kontak-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.4rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; transition: all 0.3s; }
+
+.kontak-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
 .kontak-item:hover { background: rgba(255,255,255,0.1); border-color: rgba(184,134,11,0.4); }
-.k-icon { font-size: 1.3rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(184,134,11,0.15); border-radius: 8px; flex-shrink: 0; }
+
+.k-icon {
+  font-size: 1.3rem;
+  width: 40px; height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(184,134,11,0.15);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
 .k-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-light); }
 .k-value { font-size: 0.97rem; color: rgba(255,255,255,0.82); margin-top: 0.2rem; }
-.kontak-cta { background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.25); border-radius: 14px; padding: 2.5rem; }
+
+.kontak-cta {
+  background: rgba(184,134,11,0.1);
+  border: 1px solid rgba(184,134,11,0.25);
+  border-radius: 14px;
+  padding: 2.5rem;
+}
 .cta-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 0.8rem; }
 .cta-desc { font-size: 0.97rem; color: rgba(255,255,255,0.58); line-height: 1.7; margin-bottom: 2rem; }
-.wa-btn { display: flex; align-items: center; justify-content: center; gap: 0.8rem; width: 100%; background: #25D366; color: var(--white); padding: 1rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.3s; margin-bottom: 0.8rem; }
+
+.wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  background: #25D366;
+  color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s;
+  margin-bottom: 0.8rem;
+}
 .wa-btn:hover { background: #20c05c; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,211,102,0.35); }
 .wa-btn-2 { background: #1da851; }
 .wa-btn-2:hover { background: #18943f; }
 .wa-btn svg { width: 22px; height: 22px; }
+
 .wa-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
 .wa-note { text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.38); margin-top: 0.4rem; }
 
-footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid rgba(184,134,11,0.2); }
+
+/* ============================================================
+   10. FOOTER
+   ============================================================ */
+footer {
+  background: #0f0f1e;
+  padding: 2rem 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid rgba(184,134,11,0.2);
+}
 .f-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); }
 .f-logo span { color: var(--accent-light); }
 .f-copy { font-size: 0.85rem; color: rgba(255,255,255,0.32); }
 
-.float-wa { position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 998; width: 60px; height: 60px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.5); transition: all 0.3s; animation: floaty 3s ease-in-out infinite; }
+
+/* ============================================================
+   11. FLOATING WHATSAPP BUTTON
+   ============================================================ */
+.float-wa {
+  position: fixed;
+  bottom: 1.8rem; right: 1.8rem;
+  z-index: 998;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+  transition: all 0.3s;
+  animation: floaty 3s ease-in-out infinite;
+}
 .float-wa:hover { box-shadow: 0 10px 32px rgba(37,211,102,0.6); animation: none; transform: scale(1.1); }
 @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 .float-wa svg { width: 30px; height: 30px; }
-.wa-tip { position: absolute; right: 72px; top: 50%; transform: translateY(-50%); background: var(--primary); color: var(--white); font-size: 0.82rem; padding: 0.45rem 0.9rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+
+.wa-tip {
+  position: absolute;
+  right: 72px; top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  color: var(--white);
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  border: 1px solid rgba(255,255,255,0.1);
+}
 .float-wa:hover .wa-tip { opacity: 1; }
 
+
+/* ============================================================
+   12. REVEAL ANIMATION
+   ============================================================ */
 .reveal { opacity: 0; transform: translateY(28px); transition: all 0.65s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============================================================
+   13. RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 768px) {
   html { font-size: 16px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
+
+  /* Logo lebih kecil di mobile */
+  :root {
+    --logo-size: 80px;
+    --logo-overflow: 18px;
+  }
+
   .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 5%; }
   .hero-image { max-height: 280px; aspect-ratio: 16/9; order: -1; }
   .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -188,9 +857,12 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   .kontak-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   footer { flex-direction: column; text-align: center; align-items: center; }
 }
+
 @media (max-width: 480px) {
   html { font-size: 15px; }
   section { padding: 3.5rem 5%; }
+  :root { --logo-size: 68px; --logo-overflow: 14px; }
+
   .hero-title { font-size: 2rem; }
   .hero-btns { flex-direction: column; }
   .btn-gold, .btn-ghost { width: 100%; justify-content: center; }
@@ -204,8 +876,15 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
 </head>
 <body>
 
+<!-- ======================== NAVBAR ======================== -->
 <nav id="navbar">
-  <a href="#hero" class="nav-logo"><img src="images/logo-removebg-preview.png" alt="Logo DA">Dita <span>Aryani</span> Putri</a>
+  <a href="#hero" class="nav-logo">
+    <div class="logo-img-wrap">
+      <img src="images/logo.png" alt="Logo DA">
+    </div>
+    <span class="logo-text">CV. Dita <span>Aryani</span> Putri</span>
+  </a>
+
   <ul class="nav-links">
     <li><a href="#tentang">Tentang</a></li>
     <li><a href="#layanan">Layanan</a></li>
@@ -213,11 +892,13 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
     <li><a href="#proses">Proses</a></li>
     <li><a href="#kontak" class="nav-cta">Hubungi Kami</a></li>
   </ul>
+
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
+<!-- Mobile Menu -->
 <div id="mobile-menu">
   <ul>
     <li><a href="#tentang" onclick="toggleMenu()">Tentang</a></li>
@@ -228,14 +909,18 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </ul>
 </div>
 
+<!-- ======================== HERO ======================== -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-inner">
     <div class="hero-text">
       <div class="hero-badge"><div class="badge-dot"></div><span>Jasa Pengaspalan Profesional</span></div>
-      <h1 class="hero-title">Jalan Berkualitas,<br><em>Tahan Lama &amp; Presisi</em></h1>
+      <h1 class="hero-title">
+        <span class="line"><span class="line-inner">Jalan Berkualitas,</span></span>
+        <span class="line"><span class="line-inner"><em>Tahan Lama &amp; Presisi</em></span></span>
+      </h1>
       <p class="hero-desc">CV. Dita Aryani Putri hadir sebagai mitra terpercaya dalam pengaspalan jalan, parkiran, dan infrastruktur. Dengan mengutamakan kualitas bahan, ketepatan waktu, dan kepuasan klien, kami siap memberikan layanan terbaik. Layanan kami menjangkau wilayah Jabodetabek, Pulau Jawa, hingga Bali.</p>
-        <a href="#layanan" class="btn-ghost">Lihat Layanan →</a>
+      <a href="#layanan" class="btn-ghost">Lihat Layanan →</a>
       <div class="hero-stats">
         <div><div class="stat-num" data-target="10" data-suffix="+">10+</div><div class="stat-lbl">Tahun Pengalaman</div></div>
         <div><div class="stat-num" data-target="200" data-suffix="+">200+</div><div class="stat-lbl">Proyek Selesai</div></div>
@@ -248,6 +933,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
+<!-- ======================== TENTANG ======================== -->
 <section id="tentang">
   <div class="section-wrap">
     <div class="about-grid">
@@ -270,6 +956,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
+<!-- ======================== LAYANAN ======================== -->
 <section id="layanan">
   <div class="section-wrap">
     <div class="layanan-header reveal">
@@ -290,6 +977,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
+<!-- ======================== GALERI ======================== -->
 <section id="galeri">
   <div class="section-wrap">
     <div class="gallery-top reveal">
@@ -306,6 +994,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
+<!-- ======================== PROSES ======================== -->
 <section id="proses">
   <div class="section-wrap">
     <div class="proses-header reveal">
@@ -324,6 +1013,7 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
+<!-- ======================== KONTAK ======================== -->
 <section id="kontak">
   <div class="section-wrap">
     <div class="section-label"><span>Hubungi Kami</span></div>
@@ -333,28 +1023,47 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
         <p class="kontak-tagline">Konsultasikan kebutuhan pengaspalan Anda. Kami siap hadir kapanpun Anda butuhkan.</p>
         <div class="kontak-items">
           <div class="kontak-item">
-          <div class="k-icon">📍</div>
-          <div>
-            <div class="k-label">Lokasi Operasional</div>
-            <div class="k-value">Jabodetabek, Pulau Jawa, hingga Bali</div>
+            <div class="k-icon">📍</div>
+            <div>
+              <div class="k-label">Lokasi Operasional</div>
+              <div class="k-value">Jabodetabek, Pulau Jawa, hingga Bali</div>
+            </div>
           </div>
-        </div>
-          <div class="kontak-item"><div class="k-icon">📱</div><div><div class="k-label">WhatsApp / Telepon</div><div class="k-value"> 0813-8222-7125 (Chief Manager-Jajang Atmaja) </div><div class="k-value">0812-8142-9709 (Nana Kurniawan) </div></div></div>
-          <div class="kontak-item"><div class="k-icon">⏰</div><div><div class="k-label">Jam Operasional</div><div class="k-value">Senin – Sabtu, 07.00 – 17.00 WIB</div></div></div>
-          <div class="kontak-item"><div class="k-icon">📧</div><div><div class="k-label">Email</div><div class="k-value">nanakurniawancirebon@gmail.com</div></div></div>
+          <div class="kontak-item">
+            <div class="k-icon">📱</div>
+            <div>
+              <div class="k-label">WhatsApp / Telepon</div>
+              <div class="k-value">0812-8142-9709 (Chief Manager - Nana Kurniawan)</div>
+              <div class="k-value">0813-8222-7125 (Site Manager-Jajang Atmaja)</div>
+            </div>
+          </div>
+          <div class="kontak-item">
+            <div class="k-icon">⏰</div>
+            <div>
+              <div class="k-label">Jam Operasional</div>
+              <div class="k-value">Senin – Sabtu, 07.00 – 17.00 WIB</div>
+            </div>
+          </div>
+          <div class="kontak-item">
+            <div class="k-icon">📧</div>
+            <div>
+              <div class="k-label">Email</div>
+              <div class="k-value">nanakurniawancirebon@gmail.com</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="kontak-cta reveal">
         <h3 class="cta-title">Chat via WhatsApp</h3>
         <p class="cta-desc">Hubungi kami langsung. Dapatkan konsultasi gratis dan estimasi harga untuk proyek Anda.</p>
         <div class="wa-label">Pilih nomor yang ingin dihubungi:</div>
-        <a href="https://wa.me/ 6281382227125?text=Halo%20Dita%20Aryani%20Putri%2C%20saya%20ingin%20konsultasi%20pengaspalan." target="_blank" class="wa-btn">
-          <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Jajang Atmaja
-        </a>
         <a href="https://wa.me/6281281429709?text=Halo%20Dita%20Aryani%20Putri%2C%20saya%20ingin%20konsultasi%20pengaspalan." target="_blank" class="wa-btn wa-btn-2">
           <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Nana Kurniawan
+        </a>
+        <a href="https://wa.me/6281382227125?text=Halo%20Dita%20Aryani%20Putri%2C%20saya%20ingin%20konsultasi%20pengaspalan." target="_blank" class="wa-btn">
+          <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Jajang Atmaja
         </a>
         <p class="wa-note">💬 Respons cepat · Konsultasi 100% Gratis</p>
       </div>
@@ -362,25 +1071,21 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   </div>
 </section>
 
+<!-- ======================== FOOTER ======================== -->
 <footer>
   <div class="f-logo">Dita <span>Aryani</span> Putri</div>
   <p class="f-copy">© 2025 CV. Dita Aryani Putri. Seluruh hak cipta dilindungi.</p>
 </footer>
 
-<script>
+<!-- ======================== SCRIPT ======================== -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+
+/* --- Galeri Preview --- */
 const FOTO_GALERI = [
-  "images/1.jpeg",
-  "images/2.jpeg",
-  "images/3.jpeg",
-  "images/4.jpeg",
-  "images/5.jpeg",
-  "images/6.jpeg",
-  "images/7.jpeg",
-  "images/8.jpeg",
-  "images/9.jpeg",
-  "images/10.jpeg",
-  "images/11.jpeg",
-  "images/12.jpeg",
+  "images/1.jpeg","images/2.jpeg","images/3.jpeg","images/4.jpeg",
+  "images/5.jpeg","images/6.jpeg","images/7.jpeg","images/8.jpeg",
+  "images/9.jpeg","images/10.jpeg","images/11.jpeg","images/12.jpeg","images/13.jpeg","images/14.jpeg","images/15.jpeg","images/16.jpeg","images/17.jpeg","images/18.jpeg",
 ];
 
 const grid = document.getElementById('preview-grid');
@@ -396,9 +1101,11 @@ FOTO_GALERI.slice(0, 4).forEach(src => {
   grid.appendChild(item);
 });
 
+/* --- Navbar scroll --- */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
 
+/* --- Mobile menu --- */
 let menuOpen = false;
 function toggleMenu() {
   menuOpen = !menuOpen;
@@ -407,21 +1114,36 @@ function toggleMenu() {
   document.body.style.overflow = menuOpen ? 'hidden' : '';
 }
 
+/* --- Reveal on scroll --- */
 const ro = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100); });
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
 }, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
-
+document.querySelectorAll('.reveal').forEach(el => {
+  if (!el.closest('#hero')) ro.observe(el);
+});
+/* --- Animate stats number --- */
 function animateNum(el) {
   const target = parseInt(el.dataset.target), suffix = el.dataset.suffix || '';
   let c = 0; const step = target / 50;
-  const t = setInterval(() => { c += step; if (c >= target) { c = target; clearInterval(t); } el.textContent = Math.floor(c) + suffix; }, 30);
+  const t = setInterval(() => {
+    c += step;
+    if (c >= target) { c = target; clearInterval(t); }
+    el.textContent = Math.floor(c) + suffix;
+  }, 30);
 }
 const so = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('[data-target]').forEach(animateNum); so.unobserve(e.target); } });
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-target]').forEach(animateNum);
+      so.unobserve(e.target);
+    }
+  });
 }, { threshold: 0.5 });
 const hs = document.querySelector('.hero-stats');
 if (hs) so.observe(hs);
 </script>
+
 </body>
 </html>
