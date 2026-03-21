@@ -27,8 +27,8 @@
 
   /* Navbar */
   --nav-height: 82px;       /* sedikit lebih tinggi agar logo muat */
-  --logo-size: 140px;       /* ← DIPERBESAR dari 110px */
-  --logo-overflow: 40px;    /* ← lebih jauh overflow ke bawah */
+  --logo-size: 165px;       /* ← diperbesar lagi */
+  --logo-overflow: 52px;    /* ← overflow lebih jauh */
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -132,18 +132,19 @@ nav {
 
 .nav-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
+  font-size: 1rem;          /* ← dikecilkan dari 1.3rem */
   font-weight: 700;
   color: var(--primary);
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
   position: relative;
   z-index: 10;
+  white-space: nowrap;      /* ← paksa satu baris */
 }
 
-.nav-logo .logo-text { color: var(--primary); }
+.nav-logo .logo-text { color: var(--primary); font-size: 1rem; line-height: 1.25; }
 .nav-logo .logo-text span { color: var(--accent); }
 
 /* Logo gambar — besar & overflow ke bawah navbar */
@@ -167,18 +168,19 @@ nav {
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   list-style: none;
   align-items: center;
 }
 .nav-links a {
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--text-mid);
   text-decoration: none;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: var(--accent); }
 
@@ -537,8 +539,8 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   /* ← Logo tetap besar di tablet/mobile */
   :root {
     --nav-height: 76px;
-    --logo-size: 110px;    /* ← diperbesar dari 80px */
-    --logo-overflow: 28px; /* ← lebih jauh dari 18px */
+    --logo-size: 125px;    /* ← besar di tablet */
+    --logo-overflow: 34px;
   }
 
   .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 5%; }
@@ -558,8 +560,8 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   /* ← Logo tetap keliatan jelas di HP */
   :root {
     --nav-height: 70px;
-    --logo-size: 90px;     /* ← diperbesar dari 68px */
-    --logo-overflow: 22px; /* ← lebih dari 14px */
+    --logo-size: 105px;    /* ← jelas di HP */
+    --logo-overflow: 28px;
   }
 
   .hero-title { font-size: 2rem; }
