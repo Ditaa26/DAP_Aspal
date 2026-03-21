@@ -26,9 +26,9 @@
   --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
 
   /* Navbar */
-  --nav-height: 72px;
-  --logo-size: 110px;       /* ukuran logo besar */
-  --logo-overflow: 30px;    /* seberapa jauh logo menonjol ke bawah navbar */
+  --nav-height: 82px;       /* sedikit lebih tinggi agar logo muat */
+  --logo-size: 140px;       /* ← DIPERBESAR dari 110px */
+  --logo-overflow: 40px;    /* ← lebih jauh overflow ke bawah */
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,8 +48,6 @@ body {
 /* ============================================================
    1b. HERO ENTRANCE ANIMATIONS
    ============================================================ */
-
-/* Navbar slide turun dari atas */
 #navbar {
   animation: navSlideDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
 }
@@ -58,7 +56,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Badge muncul bounce */
 .hero-badge {
   animation: badgeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
 }
@@ -67,11 +64,7 @@ body {
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Tiap baris judul slide naik dari bawah */
-.hero-title .line {
-  display: block;
-  overflow: hidden;
-}
+.hero-title .line { display: block; overflow: hidden; }
 .hero-title .line-inner {
   display: block;
   animation: lineSlideUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -83,17 +76,9 @@ body {
   to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Deskripsi fade naik */
-.hero-desc {
-  animation: fadeSlideUp 0.8s ease 1.05s both;
-}
+.hero-desc  { animation: fadeSlideUp 0.8s ease 1.05s both; }
+.btn-ghost  { animation: fadeSlideUp 0.7s ease 1.2s both; }
 
-/* Tombol */
-.btn-ghost {
-  animation: fadeSlideUp 0.7s ease 1.2s both;
-}
-
-/* Stats muncul stagger */
 .hero-stats > div:nth-child(1) { animation: fadeSlideUp 0.6s ease 1.35s both; }
 .hero-stats > div:nth-child(2) { animation: fadeSlideUp 0.6s ease 1.5s both; }
 .hero-stats > div:nth-child(3) { animation: fadeSlideUp 0.6s ease 1.65s both; }
@@ -103,7 +88,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Foto hero slide dari kanan */
 .hero-image {
   animation: heroImgIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
 }
@@ -112,7 +96,6 @@ body {
   to   { opacity: 1; transform: translateX(0) scale(1); }
 }
 
-/* Garis emas shimmer di bawah hero */
 #hero::after {
   content: '';
   position: absolute;
@@ -128,11 +111,8 @@ body {
 }
 
 
-
-
-
 /* ============================================================
-   2. NAVBAR & LOGO (Logo besar overflow ke bawah)
+   2. NAVBAR & LOGO
    ============================================================ */
 nav {
   position: fixed;
@@ -147,10 +127,9 @@ nav {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: visible; /* penting agar logo bisa overflow */
+  overflow: visible;
 }
 
-/* Logo wrapper: posisi relatif agar img bisa overflow secara absolut */
 .nav-logo {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
@@ -161,23 +140,20 @@ nav {
   align-items: center;
   gap: 0.7rem;
   position: relative;
-  /* Tinggi wrapper tetap sama dengan nav, tapi logo img akan overflow */
   z-index: 10;
 }
 
-/* Logo teks */
 .nav-logo .logo-text { color: var(--primary); }
 .nav-logo .logo-text span { color: var(--accent); }
 
-/* Logo gambar — inilah yang dibuat besar & overflow ke bawah */
+/* Logo gambar — besar & overflow ke bawah navbar */
 .nav-logo .logo-img-wrap {
   position: relative;
   width: var(--logo-size);
   height: var(--logo-size);
   flex-shrink: 0;
-  /* Geser logo ke bawah supaya overflow keluar navbar */
   margin-top: calc(var(--logo-overflow) * 0.6);
-  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.18));
+  filter: drop-shadow(0 8px 22px rgba(0,0,0,0.22));
   transition: transform 0.3s;
 }
 .nav-logo .logo-img-wrap:hover { transform: scale(1.05); }
@@ -189,7 +165,6 @@ nav {
   display: block;
 }
 
-/* Nav links */
 .nav-links {
   display: flex;
   gap: 2rem;
@@ -217,7 +192,6 @@ nav {
 }
 .nav-cta:hover { background: var(--accent-light) !important; }
 
-/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -236,7 +210,6 @@ nav {
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Mobile menu */
 #mobile-menu {
   display: none;
   position: fixed;
@@ -271,13 +244,10 @@ nav {
   background: var(--primary);
   position: relative;
   overflow: hidden;
-  /* padding-top menyesuaikan tinggi navbar */
   padding-top: var(--nav-height);
 }
 
-section {
-  scroll-margin-top: var(--nav-height);
-}
+section { scroll-margin-top: var(--nav-height); }
 
 .hero-bg {
   position: absolute; inset: 0;
@@ -358,11 +328,7 @@ section {
   border: none;
   cursor: pointer;
 }
-.btn-gold:hover {
-  background: var(--accent-light);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(184,134,11,0.35);
-}
+.btn-gold:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,134,11,0.35); }
 
 .btn-ghost {
   display: inline-flex;
@@ -425,26 +391,9 @@ section { padding: 5rem 5%; }
   gap: 0.7rem;
   margin-bottom: 0.8rem;
 }
-.section-label::before {
-  content: '';
-  width: 28px; height: 2px;
-  background: var(--accent);
-  display: block;
-}
-.section-label span {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--primary);
-}
+.section-label::before { content: ''; width: 28px; height: 2px; background: var(--accent); display: block; }
+.section-label span { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 700; line-height: 1.2; color: var(--primary); }
 .section-title.on-dark { color: var(--white); }
 
 
@@ -453,61 +402,19 @@ section { padding: 5rem 5%; }
    ============================================================ */
 #tentang { background: var(--white); }
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: center;
-  margin-top: 3rem;
-}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3rem; }
 
-.about-img-wrap {
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 4/3;
-  box-shadow: var(--shadow-lg);
-  background: var(--light-bg);
-}
+.about-img-wrap { border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: var(--shadow-lg); background: var(--light-bg); }
 .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.about-img-placeholder {
-  width: 100%; height: 100%;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-}
+.about-img-placeholder { width: 100%; height: 100%; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; }
 .about-img-placeholder p { font-size: 0.85rem; color: var(--text-light); }
 
-.about-body {
-  font-size: 1.05rem;
-  color: var(--text-mid);
-  line-height: 1.85;
-  margin: 1.2rem 0 2rem;
-}
+.about-body { font-size: 1.05rem; color: var(--text-mid); line-height: 1.85; margin: 1.2rem 0 2rem; }
 
-.values-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
-}
-.val-card {
-  padding: 1.1rem 1.3rem;
-  background: var(--off-white);
-  border-radius: 8px;
-  border-left: 3px solid var(--accent);
-  transition: box-shadow 0.2s;
-}
+.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.val-card { padding: 1.1rem 1.3rem; background: var(--off-white); border-radius: 8px; border-left: 3px solid var(--accent); transition: box-shadow 0.2s; }
 .val-card:hover { box-shadow: var(--shadow); }
-.val-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
+.val-title { font-size: 0.88rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
 .val-desc { font-size: 0.9rem; color: var(--text-mid); margin-top: 0.2rem; line-height: 1.5; }
 
 
@@ -515,56 +422,17 @@ section { padding: 5rem 5%; }
    6. LAYANAN SECTION
    ============================================================ */
 #layanan { background: var(--primary); }
-
 .layanan-header { text-align: center; margin-bottom: 3rem; }
 .layanan-header .section-label { justify-content: center; }
 .layanan-header p { font-size: 1rem; color: rgba(255,255,255,0.55); margin-top: 0.8rem; }
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.svc-card {
-  background: #22223a;
-  padding: 2.5rem 2rem;
-  transition: background 0.3s;
-  position: relative;
-}
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; }
+.svc-card { background: #22223a; padding: 2.5rem 2rem; transition: background 0.3s; position: relative; }
 .svc-card:hover { background: #2a2a48; }
-.svc-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transition: transform 0.4s;
-  transform-origin: left;
-}
+.svc-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transition: transform 0.4s; transform-origin: left; }
 .svc-card:hover::after { transform: scaleX(1); }
-
 .svc-emoji { font-size: 2rem; display: block; margin-bottom: 1.2rem; }
-.svc-num {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-.svc-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 0.8rem;
-  line-height: 1.3;
-}
+.svc-num { font-size: 0.75rem; font-weight: 700; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.svc-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; color: var(--white); margin-bottom: 0.8rem; line-height: 1.3; }
 .svc-desc { font-size: 0.95rem; color: rgba(255,255,255,0.58); line-height: 1.7; }
 
 
@@ -572,70 +440,18 @@ section { padding: 5rem 5%; }
    7. GALERI SECTION
    ============================================================ */
 #galeri { background: var(--light-bg); }
-
-.gallery-top {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.gallery-preview-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 120px;
-  gap: 8px;
-}
-
-.g-item {
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  background: #22223a;
-}
+.gallery-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem; }
+.gallery-preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 120px; gap: 8px; }
+.g-item { border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; background: #22223a; }
 .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
 .g-item:hover img { transform: scale(1.06); }
-.g-ph {
-  width: 100%; height: 100%;
-  min-height: 180px;
-  background: linear-gradient(160deg, #2c2c2c, #1a1a1a);
-}
-.g-border {
-  position: absolute; inset: 0;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  transition: border-color 0.3s;
-  pointer-events: none;
-}
+.g-ph { width: 100%; height: 100%; min-height: 180px; background: linear-gradient(160deg, #2c2c2c, #1a1a1a); }
+.g-border { position: absolute; inset: 0; border: 2px solid transparent; border-radius: 10px; transition: border-color 0.3s; pointer-events: none; }
 .g-item:hover .g-border { border-color: var(--accent); }
-
-.gallery-more {
-  margin-top: 1.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
+.gallery-more { margin-top: 1.6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 .gallery-count-info { font-size: 0.9rem; color: var(--text-light); }
 .gallery-count-info strong { color: var(--accent); }
-
-.btn-outline-dark {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  border: 2px solid var(--primary);
-  color: var(--primary);
-  padding: 0.9rem 2rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-}
+.btn-outline-dark { display: inline-flex; align-items: center; gap: 0.6rem; border: 2px solid var(--primary); color: var(--primary); padding: 0.9rem 2rem; border-radius: 6px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s; }
 .btn-outline-dark:hover { background: var(--primary); color: var(--white); transform: translateY(-2px); }
 
 
@@ -643,40 +459,13 @@ section { padding: 5rem 5%; }
    8. PROSES SECTION
    ============================================================ */
 #proses { background: var(--white); }
-
 .proses-header { text-align: center; margin-bottom: 3rem; }
 .proses-header .section-label { justify-content: center; }
 .proses-header p { font-size: 1rem; color: var(--text-mid); margin-top: 0.8rem; }
-
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.step-card {
-  text-align: center;
-  padding: 2rem 1.5rem;
-  background: var(--off-white);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  transition: all 0.3s;
-}
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.step-card { text-align: center; padding: 2rem 1.5rem; background: var(--off-white); border-radius: 12px; border: 1px solid var(--border); transition: all 0.3s; }
 .step-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-3px); }
-
-.step-num {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: var(--accent-pale);
-  border: 2px solid var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.2rem;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--accent);
-}
+.step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-pale); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--accent); }
 .step-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
 .step-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.6; }
 
@@ -685,81 +474,22 @@ section { padding: 5rem 5%; }
    9. KONTAK SECTION
    ============================================================ */
 #kontak { background: var(--primary); }
-
-.kontak-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-top: 3rem;
-  align-items: start;
-}
-
-.kontak-tagline {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.35rem;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.6;
-  margin: 1rem 0 2rem;
-  font-style: italic;
-}
-
+.kontak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+.kontak-tagline { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin: 1rem 0 2rem; font-style: italic; }
 .kontak-items { display: flex; flex-direction: column; gap: 1rem; }
-
-.kontak-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.2rem 1.4rem;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  transition: all 0.3s;
-}
+.kontak-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.4rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; transition: all 0.3s; }
 .kontak-item:hover { background: rgba(255,255,255,0.1); border-color: rgba(184,134,11,0.4); }
-
-.k-icon {
-  font-size: 1.3rem;
-  width: 40px; height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(184,134,11,0.15);
-  border-radius: 8px;
-  flex-shrink: 0;
-}
+.k-icon { font-size: 1.3rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(184,134,11,0.15); border-radius: 8px; flex-shrink: 0; }
 .k-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-light); }
 .k-value { font-size: 0.97rem; color: rgba(255,255,255,0.82); margin-top: 0.2rem; }
-
-.kontak-cta {
-  background: rgba(184,134,11,0.1);
-  border: 1px solid rgba(184,134,11,0.25);
-  border-radius: 14px;
-  padding: 2.5rem;
-}
+.kontak-cta { background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.25); border-radius: 14px; padding: 2.5rem; }
 .cta-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 0.8rem; }
 .cta-desc { font-size: 0.97rem; color: rgba(255,255,255,0.58); line-height: 1.7; margin-bottom: 2rem; }
-
-.wa-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  width: 100%;
-  background: #25D366;
-  color: var(--white);
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.3s;
-  margin-bottom: 0.8rem;
-}
+.wa-btn { display: flex; align-items: center; justify-content: center; gap: 0.8rem; width: 100%; background: #25D366; color: var(--white); padding: 1rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.3s; margin-bottom: 0.8rem; }
 .wa-btn:hover { background: #20c05c; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,211,102,0.35); }
 .wa-btn-2 { background: #1da851; }
 .wa-btn-2:hover { background: #18943f; }
 .wa-btn svg { width: 22px; height: 22px; }
-
 .wa-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
 .wa-note { text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.38); margin-top: 0.4rem; }
 
@@ -767,16 +497,7 @@ section { padding: 5rem 5%; }
 /* ============================================================
    10. FOOTER
    ============================================================ */
-footer {
-  background: #0f0f1e;
-  padding: 2rem 5%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  border-top: 1px solid rgba(184,134,11,0.2);
-}
+footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid rgba(184,134,11,0.2); }
 .f-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); }
 .f-logo span { color: var(--accent-light); }
 .f-copy { font-size: 0.85rem; color: rgba(255,255,255,0.32); }
@@ -785,40 +506,11 @@ footer {
 /* ============================================================
    11. FLOATING WHATSAPP BUTTON
    ============================================================ */
-.float-wa {
-  position: fixed;
-  bottom: 1.8rem; right: 1.8rem;
-  z-index: 998;
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  background: #25D366;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 6px 24px rgba(37,211,102,0.5);
-  transition: all 0.3s;
-  animation: floaty 3s ease-in-out infinite;
-}
+.float-wa { position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 998; width: 60px; height: 60px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.5); transition: all 0.3s; animation: floaty 3s ease-in-out infinite; }
 .float-wa:hover { box-shadow: 0 10px 32px rgba(37,211,102,0.6); animation: none; transform: scale(1.1); }
 @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 .float-wa svg { width: 30px; height: 30px; }
-
-.wa-tip {
-  position: absolute;
-  right: 72px; top: 50%;
-  transform: translateY(-50%);
-  background: var(--primary);
-  color: var(--white);
-  font-size: 0.82rem;
-  padding: 0.45rem 0.9rem;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  border: 1px solid rgba(255,255,255,0.1);
-}
+.wa-tip { position: absolute; right: 72px; top: 50%; transform: translateY(-50%); background: var(--primary); color: var(--white); font-size: 0.82rem; padding: 0.45rem 0.9rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s; border: 1px solid rgba(255,255,255,0.1); }
 .float-wa:hover .wa-tip { opacity: 1; }
 
 
@@ -842,10 +534,11 @@ footer {
   .nav-links { display: none; }
   .hamburger { display: flex; }
 
-  /* Logo lebih kecil di mobile */
+  /* ← Logo tetap besar di tablet/mobile */
   :root {
-    --logo-size: 80px;
-    --logo-overflow: 18px;
+    --nav-height: 76px;
+    --logo-size: 110px;    /* ← diperbesar dari 80px */
+    --logo-overflow: 28px; /* ← lebih jauh dari 18px */
   }
 
   .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 5%; }
@@ -861,7 +554,13 @@ footer {
 @media (max-width: 480px) {
   html { font-size: 15px; }
   section { padding: 3.5rem 5%; }
-  :root { --logo-size: 68px; --logo-overflow: 14px; }
+
+  /* ← Logo tetap keliatan jelas di HP */
+  :root {
+    --nav-height: 70px;
+    --logo-size: 90px;     /* ← diperbesar dari 68px */
+    --logo-overflow: 22px; /* ← lebih dari 14px */
+  }
 
   .hero-title { font-size: 2rem; }
   .hero-btns { flex-direction: column; }
@@ -1048,7 +747,7 @@ footer {
             <div class="k-icon">📧</div>
             <div>
               <div class="k-label">Email</div>
-              <div class="k-value">nanakurniawancirebon@gmail.com</div>
+              <div class="k-value">cv.ditaaryanimakmur@gmail.com</div>
             </div>
           </div>
         </div>
