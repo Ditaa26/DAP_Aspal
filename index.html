@@ -26,9 +26,9 @@
   --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
 
   /* Navbar */
-  --nav-height: 82px;       /* sedikit lebih tinggi agar logo muat */
-  --logo-size: 165px;       /* ← diperbesar lagi */
-  --logo-overflow: 52px;    /* ← overflow lebih jauh */
+  --nav-height: 72px;
+  --logo-size: 120px;       /* logo besar, nyembul ke bawah */
+  --logo-overflow: 48px;    /* seberapa jauh logo melewati batas bawah navbar */
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -128,11 +128,12 @@ nav {
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   overflow: visible;
+  gap: 1.5rem;
 }
 
+/* ── Logo wrapper ── */
 .nav-logo {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;          /* ← dikecilkan dari 1.3rem */
   font-weight: 700;
   color: var(--primary);
   text-decoration: none;
@@ -141,10 +142,16 @@ nav {
   gap: 0.6rem;
   position: relative;
   z-index: 10;
-  white-space: nowrap;      /* ← paksa satu baris */
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
-.nav-logo .logo-text { color: var(--primary); font-size: 1rem; line-height: 1.25; }
+/* Teks nama — dikecilkan agar satu baris di laptop */
+.nav-logo .logo-text {
+  font-size: 1rem;       /* ← turun dari 1.3rem */
+  line-height: 1.25;
+  color: var(--primary);
+}
 .nav-logo .logo-text span { color: var(--accent); }
 
 /* Logo gambar — besar & overflow ke bawah navbar */
@@ -153,7 +160,7 @@ nav {
   width: var(--logo-size);
   height: var(--logo-size);
   flex-shrink: 0;
-  margin-top: calc(var(--logo-overflow) * 0.6);
+  margin-top: calc(var(--logo-overflow) * 0.5);
   filter: drop-shadow(0 8px 22px rgba(0,0,0,0.22));
   transition: transform 0.3s;
 }
@@ -162,18 +169,20 @@ nav {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 50%;
+  border-radius: 0;
   display: block;
 }
 
+/* ── Nav links ── */
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.4rem;           /* sedikit lebih rapat */
   list-style: none;
   align-items: center;
+  flex-shrink: 0;
 }
 .nav-links a {
-  font-size: 0.8rem;
+  font-size: 0.8rem;     /* ← dikecilkan dari 0.88rem */
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -187,13 +196,14 @@ nav {
 .nav-cta {
   background: var(--accent) !important;
   color: var(--white) !important;
-  padding: 0.55rem 1.4rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 4px;
   font-weight: 600 !important;
   transition: background 0.2s !important;
 }
 .nav-cta:hover { background: var(--accent-light) !important; }
 
+/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -212,6 +222,7 @@ nav {
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
+/* Mobile menu */
 #mobile-menu {
   display: none;
   position: fixed;
@@ -403,16 +414,12 @@ section { padding: 5rem 5%; }
    5. TENTANG SECTION
    ============================================================ */
 #tentang { background: var(--white); }
-
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3rem; }
-
 .about-img-wrap { border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: var(--shadow-lg); background: var(--light-bg); }
 .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .about-img-placeholder { width: 100%; height: 100%; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; }
 .about-img-placeholder p { font-size: 0.85rem; color: var(--text-light); }
-
 .about-body { font-size: 1.05rem; color: var(--text-mid); line-height: 1.85; margin: 1.2rem 0 2rem; }
-
 .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 .val-card { padding: 1.1rem 1.3rem; background: var(--off-white); border-radius: 8px; border-left: 3px solid var(--accent); transition: box-shadow 0.2s; }
 .val-card:hover { box-shadow: var(--shadow); }
@@ -536,11 +543,10 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   .nav-links { display: none; }
   .hamburger { display: flex; }
 
-  /* ← Logo tetap besar di tablet/mobile */
   :root {
-    --nav-height: 76px;
-    --logo-size: 125px;    /* ← besar di tablet */
-    --logo-overflow: 34px;
+    --nav-height: 68px;
+    --logo-size: 100px;
+    --logo-overflow: 32px;
   }
 
   .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 2.5rem 5%; }
@@ -557,11 +563,10 @@ footer { background: #0f0f1e; padding: 2rem 5%; display: flex; align-items: cent
   html { font-size: 15px; }
   section { padding: 3.5rem 5%; }
 
-  /* ← Logo tetap keliatan jelas di HP */
   :root {
-    --nav-height: 70px;
-    --logo-size: 105px;    /* ← jelas di HP */
-    --logo-overflow: 28px;
+    --nav-height: 64px;
+    --logo-size: 86px;
+    --logo-overflow: 22px;
   }
 
   .hero-title { font-size: 2rem; }
